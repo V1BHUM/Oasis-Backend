@@ -1,0 +1,27 @@
+version: "3"
+services:
+  server:
+    container_name: "oasis_backend_server"
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - ./src:/oasis/src
+    environment:
+      - NODE_ENV=dev
+      - PORT=8080
+    ports:
+      - '8080:8080'
+    networks:
+      - oasis_network
+networks:
+  oasis_network:
+    name: oasis_backend_network
+    driver: bridge
+
+# services:
+#   test:
+#     container_name: test_container
+#     build:
+#       dockerfile: Dockerfile.dev
+#       context: .
