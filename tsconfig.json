@@ -3,7 +3,7 @@
 		"target": "es2018",
 		"module": "commonjs",
 		"sourceMap": true,
-		"lib": ["ES2015", "ES2016", "ES2017", "ES2018.AsyncIterable", "ESNext"],
+		"lib": ["ES2015", "ES2016", "ES2017", "ESNext.AsyncIterable", "ESNext"],
 		"outDir": "./build",
 		"rootDir": ".",
 		"strict": true,
@@ -13,8 +13,8 @@
 		"strictBindCallApply": true,
 		"noImplicitThis": true,
 		"alwaysStrict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
 		"noImplicitReturns": true,
 		"resolveJsonModule": true,
 		"moduleResolution": "node",
@@ -24,6 +24,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src/bin/www.ts", "src/**/*", "src/**/*.json", "test"],
+	"include": ["src/bin/www.ts", "src/**/*", "src/**/*.json", "src/prisma/**/*", "test"],
 	"exclude": ["node_modules"]
 }

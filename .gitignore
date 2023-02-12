@@ -1,3 +1,5 @@
 node_modules
 build
 *.pem
+*.env
+src/prisma/generated/

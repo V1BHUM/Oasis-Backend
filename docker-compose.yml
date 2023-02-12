@@ -1,5 +1,6 @@
 version: "3"
 services:
+# Backend Server
   server:
     container_name: "oasis_backend_server"
     build:
@@ -12,16 +13,44 @@ services:
       - PORT=8080
     ports:
       - '8080:8080'
+    depends_on:
+      - db
     networks:
       - oasis_network
+# Mongodb Server
+  db:
+    image: 'bitnami/mongodb:latest'
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=127.0.0.1
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_USER=root
+      - MONGODB_ROOT_PASSWORD=pass
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    ports:
+      - '27017:27017'
+    volumes:
+    - db_store:/data/db
+    logging:
+      driver: "none"
+    networks:
+      - oasis_network
+# Redis Server
+  redis:
+    image: redis
+    container_name: oasis_redis
+    volumes:
+      - ./src/config/redis:/etc/redis
+      - redis_dump:/data/
+    logging:
+      driver: "none"
+    command: ['redis-server', '/etc/redis/redis.conf', '--bind', 'redis', '--port', '6379']
+    networks:
+      - oasis_network
+volumes:
+  db_store:
+  db_store1:
+  redis_dump:
 networks:
   oasis_network:
     name: oasis_backend_network
     driver: bridge
-
-# services:
-#   test:
-#     container_name: test_container
-#     build:
-#       dockerfile: Dockerfile.dev
-#       context: .

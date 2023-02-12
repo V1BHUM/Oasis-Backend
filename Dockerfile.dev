@@ -3,8 +3,10 @@ FROM node:alpine
 WORKDIR /oasis
 
 COPY ./package.json ./
-RUN npm install
+RUN yarn install
 
 COPY . .
+
+COPY src/prisma prisma
 
 CMD ["yarn", "dev"]
