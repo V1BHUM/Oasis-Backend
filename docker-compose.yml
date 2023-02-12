@@ -1,5 +1,6 @@
 version: "3"
 services:
+# Backend Server
   server:
     container_name: "oasis_backend_server"
     build:
@@ -14,14 +15,37 @@ services:
       - '8080:8080'
     networks:
       - oasis_network
+# Mongodb Server
+  db:
+    image: mongo
+    container_name: "oasis_db"
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - db_store:/data/db
+    ports:
+      - 27018:27017
+    logging:
+      driver: "none"
+    networks:
+      - oasis_network
+# Redis Server
+  redis:
+    image: redis
+    container_name: oasis_redis
+    volumes:
+      - ./src/config/redis:/etc/redis
+      - redis_dump:/data/
+    logging:
+      driver: "none"
+    command: ['redis-server', '/etc/redis/redis.conf', '--bind', 'redis', '--port', '6379']
+    networks:
+      - oasis_network
+volumes:
+  db_store:
+  redis_dump:
 networks:
   oasis_network:
     name: oasis_backend_network
     driver: bridge
-
-# services:
-#   test:
-#     container_name: test_container
-#     build:
-#       dockerfile: Dockerfile.dev
-#       context: .
