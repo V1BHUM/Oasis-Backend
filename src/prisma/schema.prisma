@@ -12,7 +12,8 @@ generator client {
 generator typegraphql {
   provider           = "typegraphql-prisma"
   output             = "../prisma/generated/type-graphql"
-  emitTranspiledCode = true
+  emitTranspiledCode = false
+  contextPrismaKey = "prismaClient"
 }
 
 model Book {
