@@ -13,19 +13,23 @@ services:
       - PORT=8080
     ports:
       - '8080:8080'
+    depends_on:
+      - db
     networks:
       - oasis_network
 # Mongodb Server
   db:
-    image: mongo
-    container_name: "oasis_db"
+    image: 'bitnami/mongodb:latest'
     environment:
-      - PUID=1000
-      - PGID=1000
-    volumes:
-      - db_store:/data/db
+      - MONGODB_ADVERTISED_HOSTNAME=127.0.0.1
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_USER=root
+      - MONGODB_ROOT_PASSWORD=pass
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
     ports:
-      - 27018:27017
+      - '27017:27017'
+    volumes:
+    - db_store:/data/db
     logging:
       driver: "none"
     networks:
@@ -44,6 +48,7 @@ services:
       - oasis_network
 volumes:
   db_store:
+  db_store1:
   redis_dump:
 networks:
   oasis_network:

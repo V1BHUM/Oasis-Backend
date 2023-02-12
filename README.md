@@ -8,3 +8,17 @@
 6. Users can choose to purchase a prime subscription, which assigns more priority to their ads over non-prime members.
 7. Users have their own profile pages that show their bio, followers, ratings, and book transactions. Users can chat among themselves and pass on book recommendations.
 8. Users can see their buying and selling stats on their dashboards, and admins can see the performance of individual sellers and active users' analytics. This information can then be used to offer the users a discount to buy prime memberships.
+
+# Running The Project
+
+The following must be installed on your system before running the project
+- docker
+- docker-compose/ docker compose
+
+To run the project on your localhost, run the following in the project directory
+```bash
+docker-compose up --build
+```
+The first run will take a while to setup the dependencies
+
+The backend will be available on localhost:8080

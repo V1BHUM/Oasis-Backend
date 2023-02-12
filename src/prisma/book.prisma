@@ -1,0 +1,6 @@
+model Book {
+    id String @id @map("_id")
+    title String
+    author String
+    publishDate String?
+}

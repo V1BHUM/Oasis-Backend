@@ -1,0 +1,23 @@
+//******** AUTO GENERATED FILE, DO NOT EDIT.  *********
+
+datasource mongodb {
+  provider = "mongodb"
+  url      = "mongodb://root:pass@db:27017/oasis?authSource=admin&directConnection=true"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider           = "typegraphql-prisma"
+  output             = "../prisma/generated/type-graphql"
+  emitTranspiledCode = true
+}
+
+model Book {
+    id String @id @map("_id")
+    title String
+    author String
+    publishDate String?
+}
