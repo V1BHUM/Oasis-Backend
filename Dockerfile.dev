@@ -7,6 +7,4 @@ RUN yarn install
 
 COPY . .
 
-COPY src/prisma prisma
-
 CMD ["yarn", "dev"]

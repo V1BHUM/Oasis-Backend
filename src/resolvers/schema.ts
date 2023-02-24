@@ -1,12 +1,24 @@
 import 'reflect-metadata'
-import { buildSchema } from 'type-graphql'
+import { buildSchema, NonEmptyArray } from 'type-graphql'
 import { resolvers } from '../prisma/generated/type-graphql';
-import { BookResolver } from './book_resolver'
+import { UserLoginType, UserRegisterType } from '../types/user.type';
+import { UserResolver } from './user.resolver';
 
 export function buildGQLSchema()
 {
+    const resolverList: NonEmptyArray<Function> = [
+        ...resolvers,
+        UserResolver,
+    ]
+
+    const orphanedTypesList = [
+        UserRegisterType,
+        UserLoginType
+    ]
+
     return buildSchema({
-        resolvers: [...resolvers, BookResolver],
+        resolvers: [...resolverList],
+        orphanedTypes: [...orphanedTypesList],
         validate: false
     });
 }

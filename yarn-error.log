@@ -1,0 +1,77 @@
+Arguments: 
+  /home/animesh/.nvm/versions/node/v18.13.0/bin/node /usr/local/bin/yarn generate
+
+PATH: 
+  /home/animesh/.local/bin:/home/animesh/.nvm/versions/node/v18.13.0/bin:/home/animesh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/animesh/.dotnet/tools
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.13.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /media/shared-ssd/BITS/Projects/Oasis/Oasis-Backend/package.json: Unexpected token } in JSON at position 1601
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "oasis-backend",
+    "version": "1.0.0",
+    "description": "1. Users who are looking to sell can put in the request to verify their product (books) which can then be sold over the platform. 2. Librarians (verifiers) process the input requests of the users and, after verifying the product's authenticity, approve the ad to be posted. 3. Users looking to buy books can search for them based on title and tags, get connected with the seller, and buy them after reaching an agreement.  4. Users also have the option to put up their books for exchange, either for a set amount of time or indefinitely. 5. Buyers, after receiving the books, can rate the seller. The Librarian can then use these ratings to find the most reliable sellers and add an ‘Assured’ tag to them. 6. Users can choose to purchase a prime subscription, which assigns more priority to their ads over non-prime members. 7. Users have their own profile pages that show their bio, followers, ratings, and book transactions. Users can chat among themselves and pass on book recommendations. 8. Users can see their buying and selling stats on their dashboards, and admins can see the performance of individual sellers and active users' analytics. This information can then be used to offer the users a discount to buy prime memberships.",
+    "scripts": {
+      "build": "rimraf build && tsc",
+      "watch:ts": "tsc -w",
+      "server": "nodemon build/src/app.js",
+      "dev": "npm run generateSchema && npm run build && npm-run-all --parallel watch:ts server",
+      "generate": "npx prisma generate --schema=./src/prisma/schema.prisma",
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/vibhu01/Oasis-Backend.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/vibhu01/Oasis-Backend/issues"
+    },
+    "homepage": "https://github.com/vibhu01/Oasis-Backend#readme",
+    "devDependencies": {
+      "@types/cors": "^2.8.13",
+      "@types/express": "^4.17.17",
+      "nodemon": "^2.0.20",
+      "prisma": "^4.10.1",
+      "rimraf": "^4.1.2",
+      "typegraphql-prisma": "^0.23.5",
+      "typescript": "^4.9.5"
+    },
+    "dependencies": {
+      "@apollo/server": "^4.3.3",
+      "@prisma/client": "^4.10.1",
+      "@types/graphql-fields": "^1.3.4",
+      "class-validator": "^0.14.0",
+      "cors": "^2.8.5",
+      "express": "^4.18.2",
+      "graphql": "^16.6.0",
+      "graphql-fields": "^2.0.3",
+      "graphql-scalars": "^1.20.1",
+      "npm-run-all": "^4.1.5",
+      "reflect-metadata": "^0.1.13",
+      "tslib": "^2.5.0",
+      "type-graphql": "^2.0.0-beta.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

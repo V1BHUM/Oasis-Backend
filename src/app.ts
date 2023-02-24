@@ -8,7 +8,7 @@ import { apolloServer } from './apollo';
 import { PORT } from './constants';
 
 
-interface Context {
+export interface Context {
     prismaClient: PrismaClient,
     req: express.Request,
     res: express.Response

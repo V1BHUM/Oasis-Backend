@@ -1,5 +1,3 @@
-//******** AUTO GENERATED FILE, DO NOT EDIT.  *********
-
 datasource mongodb {
   provider = "mongodb"
   url      = "mongodb://root:pass@db:27017/oasis?authSource=admin&directConnection=true"
@@ -16,9 +14,22 @@ generator typegraphql {
   contextPrismaKey = "prismaClient"
 }
 
-model Book {
-    id String @id @map("_id")
-    title String
-    author String
-    publishDate String?
+model UserType {
+    id String @id @map("_id") @default(auto()) @mongodb.ObjectId
+    username String
+    password String
+    email String
+    ads AdvertisementType[]
+}
+
+model AdvertisementType {
+    id String @id @map("_id") @default(auto()) @mongodb.ObjectId
+    bookName String
+    authorName String
+    desc String
+    price Int
+    time String
+    isbn String
+    seller UserType @relation(fields: [sellerID], references: [id])
+    sellerID String
 }

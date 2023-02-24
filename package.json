@@ -6,10 +6,8 @@
     "build": "rimraf build && tsc",
     "watch:ts": "tsc -w",
     "server": "nodemon build/src/app.js",
-    "dev": "npm run generateSchema && npm run build && npm-run-all --parallel watch:ts server",
-    "mergeSchema": "npx prisma-merge --baseFile=src/prisma/base.prisma --schemaFilePatterns=src/prisma/*.prisma --outputFile=src/prisma/schema.prisma --excludedFilePattern=src/prisma/schema.prisma",
-    "generateSchema": "npx prisma generate --schema=./src/prisma/schema.prisma",
-    "generate": "npm-run-all mergeSchema generateSchema"
+    "dev": "npm run generate && npm run build && npm-run-all --parallel watch:ts server",
+    "generate": "npx prisma generate --schema=./src/prisma/schema.prisma"
   },
   "repository": {
     "type": "git",
