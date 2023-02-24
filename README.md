@@ -19,6 +19,10 @@ To run the project on your localhost, run the following in the project directory
 ```bash
 docker-compose up --build
 ```
+Or use the following if using `docker compose`
+```bash
+docker compose up --build --attach server
+```
 The first run will take a while to setup the dependencies
 
 The backend will be available on localhost:8080
