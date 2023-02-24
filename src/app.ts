@@ -28,7 +28,12 @@ app.get("/", async (req: express.Request, res:express.Response) => {
     const server = await apolloServer();
     app.use(
         "/graphql",
-        cors<cors.CorsRequest>(),
+        cors<cors.CorsRequest>(
+            {
+                origin: true,
+                credentials: true
+            }
+        ),
         expressMiddleware(server, {
             context: async ({req, res}) : Promise<Context> => {
                 return {prismaClient: prisma, req, res};

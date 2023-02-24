@@ -31,5 +31,5 @@ model AdvertisementType {
     time String
     isbn String
     seller UserType @relation(fields: [sellerID], references: [id])
-    sellerID String
+    sellerID String @mongodb.ObjectId
 }
