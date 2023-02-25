@@ -6,6 +6,10 @@ import { expressMiddleware } from '@apollo/server/express4';
 
 import { apolloServer } from './apollo';
 import { PORT } from './constants';
+import {RedisStore} from 'connect-redis';
+import session from 'express-session';
+import connectRedis from 'connect-redis';
+import * as redis from 'redis';
 
 
 export interface Context {
@@ -20,9 +24,22 @@ app.use(express.json());
 export const prisma = new PrismaClient();
 
 app.get("/", async (req: express.Request, res:express.Response) => {
-    req.body;
     res.json({"msg":"Hello, World!"});
 });
+
+const redisClient = redis.createClient({url: 'redis://redis:6379', legacyMode: true ,password:"my-super-secret-password"});
+(async ()=>{await redisClient.connect()})();
+const RedisStore = connectRedis(session);
+
+app.use(
+    session({
+        secret: 'secret',
+        store: new RedisStore({host: 'localhost', port: 6379,client:redisClient}),
+        resave: false,
+        saveUninitialized: false,
+        name:"test"
+    })
+);
 
 (async () => {
     const server = await apolloServer();
