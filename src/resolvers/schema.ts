@@ -9,7 +9,7 @@ export function buildGQLSchema()
     const resolverList: NonEmptyArray<Function> = [
         ...resolvers,
         UserResolver,
-    ]
+    ] 
 
     const orphanedTypesList = [
         UserRegisterType,

@@ -29,7 +29,7 @@ export class UserResolver {
     }
 
     @Mutation(() => UserType, {nullable: true})
-    async loginUser(@Arg('loginDetails') {username, password}: UserLoginType) : Promise<UserType | undefined> {
+    async loginUser(@Arg('loginDetails') {username, password}: UserLoginType,@Ctx() {req}:Context) : Promise<UserType | undefined> {
         const user = await prisma.userType.findFirst({
             where: {
                 username: username
@@ -40,8 +40,19 @@ export class UserResolver {
             return undefined;
         
         if(user.password === password)
+        {
+            //@ts-ignore
+            req.session.userid = user.id;
             return user;
+        }
         
         return undefined;
+    }   
+
+    @Query(()=>UserType)
+    async getCurrentUser(@Ctx() {req}:Context){
+        //@ts-ignore
+        return await prisma.userType.findFirst({where:{id:req.session.userid}});
     }
 }
+
