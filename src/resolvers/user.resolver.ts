@@ -30,6 +30,7 @@ export class UserResolver {
 
     @Mutation(() => UserType, {nullable: true})
     async loginUser(@Arg('loginDetails') {username, password}: UserLoginType,@Ctx() {req}:Context) : Promise<UserType | undefined> {
+        console.log("Login Called");
         const user = await prisma.userType.findFirst({
             where: {
                 username: username
@@ -37,12 +38,16 @@ export class UserResolver {
         });
 
         if(!user)
+        {
+            console.log("User not found " + username);
             return undefined;
+        }
+            
         
         if(user.password === password)
         {
-            //@ts-ignore
-            req.session.userid = user.id;
+            
+            req.session.userId = user.id;
             return user;
         }
         
@@ -51,8 +56,7 @@ export class UserResolver {
 
     @Query(()=>UserType)
     async getCurrentUser(@Ctx() {req}:Context){
-        //@ts-ignore
-        return await prisma.userType.findFirst({where:{id:req.session.userid}});
+        return await prisma.userType.findFirst({where:{id:req.session.userId}});
     }
 }
 
