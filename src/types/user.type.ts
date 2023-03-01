@@ -22,3 +22,18 @@ export class UserLoginType {
     password!: string
 }
 
+@InputType()
+export class UserUpdateType {
+    @Field()
+    fullName?: string
+    
+    @Field()
+    email?: string
+
+    @Field()
+    address?: string
+
+    @Field()
+    phoneNo?: string
+}
+

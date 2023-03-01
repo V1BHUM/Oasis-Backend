@@ -19,6 +19,9 @@ model UserType {
     username String
     password String
     email String
+    fullName String?
+    address String?
+    phoneNo String?
     ads AdvertisementType[]
 }
 
@@ -26,10 +29,10 @@ model AdvertisementType {
     id String @id @map("_id") @default(auto()) @mongodb.ObjectId
     bookName String
     authorName String
-    desc String
+    description String
     price Int
     time String
-    isbn String
+    isbn String @unique
     seller UserType @relation(fields: [sellerID], references: [id])
     sellerID String @mongodb.ObjectId
 }

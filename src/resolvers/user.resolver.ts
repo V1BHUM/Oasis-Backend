@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { Arg, Ctx, Mutation, ObjectType, Query, Resolver } from 'type-graphql';
 import { Context, prisma } from '../app';
 import { UserType } from '../prisma/generated/type-graphql';
-import { UserLoginType, UserRegisterType } from '../types/user.type';
+import { UserLoginType, UserRegisterType, UserUpdateType } from '../types/user.type';
 
 @Resolver(() => UserType)
 export class UserResolver {
@@ -52,7 +52,33 @@ export class UserResolver {
         }
         
         return undefined;
-    }   
+    }
+
+    @Mutation(() => UserType)
+    async updateUser(@Ctx() {req}: Context, @Arg('input') input: UserUpdateType) : Promise<UserType>
+    {
+        const user = await prisma.userType.update({
+            where: {
+                id: req.session.userId
+            },
+            data: {
+                ...input
+            }
+        })
+        return user;
+    }
+
+    @Mutation(() => Boolean)
+    async deleteUser(@Ctx() {req}: Context) : Promise<Boolean>
+    {
+        const user = await prisma.userType.delete({
+            where: {
+                id: req.session.userId
+            }
+        });
+
+        return true;
+    }
 
     @Query(()=>UserType)
     async getCurrentUser(@Ctx() {req}:Context){
