@@ -25,14 +25,22 @@ model UserType {
     ads AdvertisementType[]
 }
 
+model Book {
+  id String @id @map("_id") @default(auto()) @mongodb.ObjectId
+  bookName String
+  authorName String
+  description String
+  isbn String @unique
+  advertisements AdvertisementType[]
+}
+
 model AdvertisementType {
     id String @id @map("_id") @default(auto()) @mongodb.ObjectId
-    bookName String
-    authorName String
-    description String
     price Int
     time String
-    isbn String @unique
+    images String[] @default([])
+    book Book @relation(fields: [bookID], references: [id])
+    bookID String @mongodb.ObjectId
     seller UserType @relation(fields: [sellerID], references: [id])
     sellerID String @mongodb.ObjectId
 }

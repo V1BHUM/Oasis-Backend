@@ -84,5 +84,11 @@ export class UserResolver {
     async getCurrentUser(@Ctx() {req}:Context){
         return await prisma.userType.findFirst({where:{id:req.session.userId}});
     }
+
+    @Query(() => [UserType])
+    async getAllUsers() : Promise<UserType[]>
+    {
+        return await prisma.userType.findMany();
+    }
 }
 
