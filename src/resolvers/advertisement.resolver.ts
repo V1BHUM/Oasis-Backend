@@ -51,7 +51,24 @@ export class AdvertisementResolver {
                         }
                     },
                     book: {
-                        create: input.book
+                        create: {
+                            authorName: input.book!.authorName,
+                            bookName: input.book!.bookName,
+                            description: input.book!.description,
+                            isbn: input.book!.isbn,
+                            category: {
+                                connectOrCreate: {
+                                    where: {
+                                        name: input.book!.category.name
+                                    },
+                                    create: {
+                                        description: input.book!.category.description!,
+                                        image: input.book!.category.image,
+                                        name: input.book!.category.name
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -63,5 +80,15 @@ export class AdvertisementResolver {
     async getAllAdvertisements() : Promise<AdvertisementType[]>
     {
         return await prisma.advertisementType.findMany();
+    }
+
+    @Query(() => [AdvertisementType])
+    async getAllActiveAdvertisements() : Promise<AdvertisementType[]>
+    {
+        return await prisma.advertisementType.findMany({
+            where: {
+                open: true
+            }
+        });
     }
 }

@@ -25,12 +25,23 @@ model UserType {
     ads AdvertisementType[]
 }
 
+model Category {
+  id String @id @map("_id") @default(auto()) @mongodb.ObjectId
+  name String @unique
+  description String
+  image String @default("")
+  books Book[]
+}
+
 model Book {
   id String @id @map("_id") @default(auto()) @mongodb.ObjectId
   bookName String
   authorName String
   description String
+  purchases Int @default(0)
   isbn String @unique
+  category Category @relation(fields: [categoryID], references: [id])
+  categoryID String @mongodb.ObjectId
   advertisements AdvertisementType[]
 }
 
@@ -39,6 +50,7 @@ model AdvertisementType {
     price Int
     time String
     images String[] @default([])
+    open Boolean @default(true)
     book Book @relation(fields: [bookID], references: [id])
     bookID String @mongodb.ObjectId
     seller UserType @relation(fields: [sellerID], references: [id])

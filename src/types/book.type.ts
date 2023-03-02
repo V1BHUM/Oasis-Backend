@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Field, InputType } from 'type-graphql';
+import { CategoryCreationInput } from './category.type';
 
 @InputType()
 export class BookCreationInput {
@@ -14,4 +15,7 @@ export class BookCreationInput {
 
     @Field()
     description!: string
+
+    @Field()
+    category!: CategoryCreationInput;
 }
