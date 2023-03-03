@@ -6,7 +6,7 @@ export class CategoryCreationInput {
     @Field()
     name!: string
 
-    @Field()
+    @Field({nullable: true})
     description?: string
 
     @Field({defaultValue: ""})

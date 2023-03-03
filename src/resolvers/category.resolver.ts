@@ -12,7 +12,7 @@ export class CategoryResolver {
         return await prisma.category.create({
             data: {
                 name: input.name,
-                description: input.description!,
+                description: input.description,
                 image: input.image
             }
         });
