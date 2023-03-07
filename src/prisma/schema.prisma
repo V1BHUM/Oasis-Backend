@@ -16,7 +16,7 @@ generator typegraphql {
 
 model UserType {
     id String @id @map("_id") @default(auto()) @mongodb.ObjectId
-    username String
+    username String @unique
     password String
     email String
     fullName String?
@@ -28,7 +28,7 @@ model UserType {
 model Category {
   id String @id @map("_id") @default(auto()) @mongodb.ObjectId
   name String @unique
-  description String
+  description String?
   image String @default("")
   books Book[]
 }
