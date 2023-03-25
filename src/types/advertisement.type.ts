@@ -17,3 +17,14 @@ export class AdvertisementPostInputType {
     book?: BookCreationInput
 
 }
+
+@InputType()
+export class AdvertisementtouchInputType {
+    @Field()
+    price!: number
+
+    @Field(() => String)
+    advertisementId!:string
+
+    
+}

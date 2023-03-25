@@ -23,6 +23,7 @@ model UserType {
     address String?
     phoneNo String?
     ads AdvertisementType[]
+    touches TouchType[]
 }
 
 model Category {
@@ -55,4 +56,17 @@ model AdvertisementType {
     bookID String @mongodb.ObjectId
     seller UserType @relation(fields: [sellerID], references: [id])
     sellerID String @mongodb.ObjectId
+    touches TouchType[] 
+}
+
+model TouchType{
+  id String @id @map("_id") @default(auto()) @mongodb.ObjectId
+  price Int
+  advertisement AdvertisementType @relation(fields: [advertisementId],references: [id])
+  advertisementId String @mongodb.ObjectId
+  buyer UserType @relation(fields: [buyerId],references: [id])
+  buyerId String @mongodb.ObjectId
+  responded Boolean @default(false)
+  responded_price Int @default(-1)
+  isActive Boolean @default(true)
 }

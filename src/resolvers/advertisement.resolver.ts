@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Context, prisma } from '../app';
 import { AdvertisementType } from '../prisma/generated/type-graphql';
-import { AdvertisementPostInputType } from '../types/advertisement.type';
+import { AdvertisementPostInputType, AdvertisementtouchInputType } from '../types/advertisement.type';
 
 @Resolver()
 export class AdvertisementResolver {
@@ -90,5 +90,13 @@ export class AdvertisementResolver {
                 open: true
             }
         });
+    }
+
+    @Mutation(() => Boolean)
+    async touchAdvertisement(@Ctx(){req}:Context,@Arg("touchAdvertisement") inp:AdvertisementtouchInputType) : Promise<Boolean>
+    {
+        let userId:string = req.session.userId!
+        await prisma.touchType.create({data:{price:inp.price,advertisementId:inp.advertisementId,buyerId:userId}});
+        return true;
     }
 }

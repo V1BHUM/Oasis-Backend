@@ -18,9 +18,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vibhu01/Oasis-Backend/issues"
+    "url": "https://github.com/V1BHUM/Oasis-Backend/issues"
   },
-  "homepage": "https://github.com/vibhu01/Oasis-Backend#readme",
+  "homepage": "https://github.com/V1BHUM/Oasis-Backend#readme",
   "devDependencies": {
     "@types/connect-redis": "^0.0.20",
     "@types/cors": "^2.8.13",
