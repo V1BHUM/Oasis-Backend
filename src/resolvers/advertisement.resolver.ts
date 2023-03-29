@@ -9,7 +9,7 @@ export class AdvertisementResolver {
     @Mutation(() => AdvertisementType)
     async postAdvertisement(@Ctx() {req}: Context, @Arg("postAdvertisement") input: AdvertisementPostInputType) : Promise<AdvertisementType>
     {
-        const book = prisma.book.findUnique({
+        const book = await prisma.book.findUnique({
             where: {
                 isbn: input.isbn
             }
@@ -26,7 +26,7 @@ export class AdvertisementResolver {
                     images: input.images,
                     seller: {
                         connect: {
-                            id: "63f92ae98c2ccc50c60e69b0"
+                            id: req.session.userId
                         }
                     },
                     book: {
@@ -47,7 +47,7 @@ export class AdvertisementResolver {
                     images: input.images,
                     seller: {
                         connect: {
-                            id: "63f92ae98c2ccc50c60e69b0"
+                            id: req.session.userId
                         }
                     },
                     book: {
@@ -57,15 +57,8 @@ export class AdvertisementResolver {
                             description: input.book!.description,
                             isbn: input.book!.isbn,
                             category: {
-                                connectOrCreate: {
-                                    where: {
-                                        name: input.book!.category.name
-                                    },
-                                    create: {
-                                        description: input.book!.category.description!,
-                                        image: input.book!.category.image,
-                                        name: input.book!.category.name
-                                    }
+                                connect: {
+                                    name: input.book?.category
                                 }
                             }
                         }

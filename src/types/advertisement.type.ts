@@ -7,7 +7,7 @@ export class AdvertisementPostInputType {
     @Field()
     price!: number
 
-    @Field(() => [String])
+    @Field(() => [String], {nullable: true})
     images?: string[]
 
     @Field()

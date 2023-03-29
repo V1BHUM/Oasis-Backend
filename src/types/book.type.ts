@@ -17,5 +17,5 @@ export class BookCreationInput {
     description!: string
 
     @Field()
-    category!: CategoryCreationInput;
+    category!: string;
 }
