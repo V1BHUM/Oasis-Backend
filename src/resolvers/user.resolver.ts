@@ -80,9 +80,28 @@ export class UserResolver {
         return true;
     }
 
+    @Mutation(() => Boolean)
+    async logoutUser(@Ctx() { req, res }: Context): Promise<boolean> {
+        let loggedOut: boolean = false;
+		req.session.destroy((err) => {
+			res.clearCookie("auth");
+            console.log("Logged out user");
+			if (err) {
+                console.log(err);
+				return false;
+			} else {
+                loggedOut = true;
+				return true;
+			}
+		});
+		return await new Promise(resolve => {
+            if(loggedOut) resolve(true);
+        });
+	}
+
     @Query(()=>UserType)
     async getCurrentUser(@Ctx() {req}:Context){
-        return await prisma.userType.findFirst({where:{id:req.session.userId}});
+        return await prisma.userType.findUniqueOrThrow({where:{id:req.session.userId}});
     }
 
     @Query(() => [UserType])
