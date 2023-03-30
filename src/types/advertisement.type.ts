@@ -25,6 +25,22 @@ export class AdvertisementtouchInputType {
 
     @Field(() => String)
     advertisementId!:string
+}
 
-    
+@InputType()
+export class AdvertisementSellerResponseType {
+    @Field()
+    touchId!: string
+
+    @Field()
+    responsePrice!: number
+}
+
+@InputType()
+export class AdvertisementBuyerResponseType {
+    @Field()
+    touchId!: string
+
+    @Field()
+    accept!: boolean
 }
