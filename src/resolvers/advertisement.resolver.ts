@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Context, prisma } from '../app';
 import { AdvertisementType } from '../prisma/generated/type-graphql';
-import { AdvertisementBuyerResponseType, AdvertisementPostInputType, AdvertisementSellerResponseType, AdvertisementtouchInputType } from '../types/advertisement.type';
+import { AdvertisementBuyerResponseType, AdvertisementPostInputType, AdvertisementSearchType, AdvertisementSellerResponseType, AdvertisementtouchInputType } from '../types/advertisement.type';
 
 @Resolver()
 export class AdvertisementResolver {
@@ -83,6 +83,81 @@ export class AdvertisementResolver {
                 open: true
             }
         });
+    }
+
+    @Query(() => [AdvertisementType])
+    async searchAdvertisements(@Arg("searchInput") input: AdvertisementSearchType) : Promise<AdvertisementType[]>
+    {
+        let results: AdvertisementType[] = await prisma.advertisementType.findMany({
+            where: {
+                AND: [
+                    // Search by book name
+                    {
+                        book: {
+                            bookName: {
+                                contains: input.bookName
+                            }
+                        }
+                    },
+                    // Search by author name
+                    {  
+                        book: {
+                            authorName: {
+                                contains: input.authorName
+                            }
+                        }
+                    },
+                    // Search by seller name
+                    {
+                        OR: [
+                            // Search in username
+                            {
+                                seller: {
+                                    username: {
+                                        contains: input.sellerName
+                                    }
+                                }
+                            },
+                            // Search in full name
+                            {
+                                seller: {
+                                    fullName: {
+                                        contains: input.sellerName
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    // Search by category
+                    {
+                        book: {
+                            category: {
+                                name: input.category
+                            }
+                        }
+                    },
+                    // Search by price
+                    {
+                        AND: [
+                            // Max Price
+                            {
+                                price: {
+                                    lte: input.maxPrice
+                                }
+                            },
+                            // Min Price
+                            {
+                                price: {
+                                    gte: input.minPrice
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+
+        return results;
     }
 
     @Mutation(() => Boolean)

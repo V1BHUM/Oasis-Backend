@@ -44,3 +44,24 @@ export class AdvertisementBuyerResponseType {
     @Field()
     accept!: boolean
 }
+
+@InputType()
+export class AdvertisementSearchType {
+    @Field({nullable: true})
+    bookName?: string
+
+    @Field({nullable: true})
+    authorName?: string
+
+    @Field({nullable: true})
+    category?: string
+
+    @Field({nullable: true})
+    sellerName?: string
+
+    @Field({nullable: true})
+    minPrice?: number
+
+    @Field({nullable: true})
+    maxPrice?: number
+}
