@@ -6,6 +6,18 @@ import { AdvertisementBuyerResponseType, AdvertisementPostInputType, Advertiseme
 
 @Resolver()
 export class AdvertisementResolver {
+
+    @Query(() => AdvertisementType)
+    async getAdvertisement(@Arg("advertisement") ad: string)
+    {
+        return await prisma.advertisementType.findFirst({
+            where: {
+                id: ad
+            }
+        });
+    }
+
+
     @Mutation(() => AdvertisementType)
     async postAdvertisement(@Ctx() {req}: Context, @Arg("postAdvertisement") input: AdvertisementPostInputType) : Promise<AdvertisementType>
     {
@@ -153,7 +165,8 @@ export class AdvertisementResolver {
                             }
                         ]
                     }
-                ]
+                ],
+                open: true
             }
         });
 
