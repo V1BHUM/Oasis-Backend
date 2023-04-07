@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Context, prisma } from '../app';
-import { AdvertisementType } from '../prisma/generated/type-graphql';
+import { AdvertisementType, TouchType } from '../prisma/generated/type-graphql';
 import { AdvertisementBuyerResponseType, AdvertisementPostInputType, AdvertisementSearchType, AdvertisementSellerResponseType, AdvertisementtouchInputType } from '../types/advertisement.type';
 
 @Resolver()
@@ -234,4 +234,54 @@ export class AdvertisementResolver {
 
         return true;
     }
+
+    @Query(() => [TouchType])
+    async getBuyerTouches(@Ctx() {req} : Context) : Promise<TouchType[]>
+    {
+        return await prisma.touchType.findMany({
+            where: {
+                responded: false,
+                buyerId: req.session.userId,
+                isActive: true
+            }
+        });
+    }
+
+    @Query(() => [TouchType])
+    async getSellerResponds(@Ctx() {req}: Context) : Promise<TouchType[]>
+    {
+        return await prisma.touchType.findMany({
+            where: {
+                responded: false,
+                advertisement: {
+                    sellerID: req.session.userId
+                },
+                isActive: true
+            }
+        });
+    }
+
+    @Query(() => [TouchType])
+    async getBuyerResponds(@Ctx() {req}: Context) : Promise<TouchType[]>
+    {
+        return await prisma.touchType.findMany({
+            where: {
+                buyerId: req.session.userId,
+                isActive: true,
+                responded: true
+            }
+        });
+    }
+
+    @Query(() => [TouchType])
+    async getBuyerHistory(@Ctx() {req}: Context): Promise<TouchType[]>
+    {
+        return prisma.touchType.findMany({
+            where: {
+                buyerId: req.session.userId,
+                isActive: false,
+            }
+        });
+    }
+
 }
