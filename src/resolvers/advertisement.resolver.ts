@@ -223,7 +223,12 @@ export class AdvertisementResolver {
                 id: buyerResponse.touchId
             },
             data: {
-                isFinal: true
+                isFinal: true,
+                advertisement: {
+                    update: {
+                        open: false
+                    }
+                }
             }
            });
 
@@ -296,6 +301,20 @@ export class AdvertisementResolver {
             where: {
                 buyerId: req.session.userId,
                 isActive: false,
+            }
+        });
+    }
+
+    @Query(() => [TouchType])
+    async getSellerHistory(@Ctx() {req}: Context): Promise<TouchType[]>
+    {
+        return prisma.touchType.findMany({
+            where: {
+                isActive: false,
+                advertisement: {
+                    sellerID: req.session.userId,
+                    open: false,
+                }
             }
         });
     }
