@@ -33,7 +33,10 @@ export class AdvertisementSellerResponseType {
     touchId!: string
 
     @Field()
-    responsePrice!: number
+    responsePrice?: number
+
+    @Field()
+    accept!: boolean
 }
 
 @InputType()

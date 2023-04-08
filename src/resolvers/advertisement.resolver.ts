@@ -184,15 +184,31 @@ export class AdvertisementResolver {
     @Mutation(() => Boolean)
     async respondSellerTouch(@Arg("responseInput") input: AdvertisementSellerResponseType) : Promise<Boolean> {
 
-        await prisma.touchType.update({
-            where: {
-                id: input.touchId
-            },
-            data: {
-                responded: true,
-                responded_price: input.responsePrice
-            }
-        });
+        if(input.accept)
+        {
+            await prisma.touchType.update({
+                where: {
+                    id: input.touchId
+                },
+                data: {
+                    responded: true,
+                    responded_price: input.responsePrice
+                }
+            });
+        }
+        else
+        {
+            await prisma.touchType.update({
+                where: {
+                    id: input.touchId
+                },
+                data: {
+                    responded: true,
+                    responded_price: input.responsePrice,
+                    isActive: false
+                }
+            });
+        }
 
         return true;
     }
