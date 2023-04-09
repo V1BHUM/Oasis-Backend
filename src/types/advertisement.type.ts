@@ -50,21 +50,21 @@ export class AdvertisementBuyerResponseType {
 
 @InputType()
 export class AdvertisementSearchType {
-    @Field({nullable: true})
+    @Field({nullable: true, defaultValue: undefined})
     bookName?: string
 
-    @Field({nullable: true})
+    @Field({nullable: true, defaultValue: undefined})
     authorName?: string
 
-    @Field({nullable: true})
+    @Field({nullable: true, defaultValue: undefined})
     category?: string
 
-    @Field({nullable: true})
+    @Field({nullable: true, defaultValue: undefined})
     sellerName?: string
 
-    @Field({nullable: true})
+    @Field({nullable: true, defaultValue: undefined})
     minPrice?: number
 
-    @Field({nullable: true})
+    @Field({nullable: true, defaultValue: undefined})
     maxPrice?: number
 }

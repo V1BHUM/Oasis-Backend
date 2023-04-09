@@ -100,6 +100,8 @@ export class AdvertisementResolver {
     @Query(() => [AdvertisementType])
     async searchAdvertisements(@Arg("searchInput") input: AdvertisementSearchType) : Promise<AdvertisementType[]>
     {
+        console.log(input);
+
         let results: AdvertisementType[] = await prisma.advertisementType.findMany({
             where: {
                 AND: [
@@ -154,13 +156,13 @@ export class AdvertisementResolver {
                             // Max Price
                             {
                                 price: {
-                                    lte: input.maxPrice
+                                    lte: input.maxPrice === null ? undefined : input.maxPrice
                                 }
                             },
                             // Min Price
                             {
                                 price: {
-                                    gte: input.minPrice
+                                    gte: input.minPrice === null ? undefined : input.minPrice
                                 }
                             }
                         ]
