@@ -1,6 +1,6 @@
 datasource mongodb {
   provider = "mongodb"
-  url      = "mongodb://root:pass@db:27017/oasis?authSource=admin&directConnection=true"
+  url      = "mongodb://root:pass@54.149.59.57/oasis?authSource=admin&directConnection=true"
 }
 
 generator client {

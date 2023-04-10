@@ -8,7 +8,7 @@
     "server": "nodemon build/src/app.js",
     "dev": "npm run generate && npm run build && npm-run-all --parallel watch:ts server",
     "generate": "npx prisma generate --schema=./src/prisma/schema.prisma",
-    "push": "npx prsima db push --schema ./src/prisma/schema.prisma"
+    "push": "npx prisma db push --schema ./src/prisma/schema.prisma"
   },
   "repository": {
     "type": "git",
