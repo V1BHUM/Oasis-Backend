@@ -24,7 +24,8 @@ const expressSession = () => {
         saveUninitialized: true,
         name: "auth",
         cookie: {
-            secure: false
+            secure: false,
+            httpOnly: false
         }
     });
 }
