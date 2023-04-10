@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Context, prisma } from '../app';
-import { AdvertisementType, TouchType } from '../prisma/generated/type-graphql';
+import { AdvertisementType, TouchType, TouchTypeGroupBy } from '../prisma/generated/type-graphql';
 import { AdvertisementBuyerResponseType, AdvertisementPostInputType, AdvertisementSearchType, AdvertisementSellerResponseType, AdvertisementtouchInputType } from '../types/advertisement.type';
 
 @Resolver()
@@ -220,6 +220,13 @@ export class AdvertisementResolver {
 
         if(buyerResponse.accept)
         {
+            let temp = await prisma.touchType.findFirst({where:{id:buyerResponse.touchId}});
+            let advert = await prisma.advertisementType.findFirst({where:{id:temp?.advertisementId}});
+            if(!advert?.open)
+            {
+                throw Error("Already Sold");
+                
+            }
            let touch = await prisma.touchType.update({
             where: {
                 id: buyerResponse.touchId
