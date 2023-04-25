@@ -234,6 +234,23 @@ export class AdvertisementResolver {
             }
            });
 
+           let ad = await prisma.advertisementType.findUnique({
+            where: {
+                id: touch.advertisementId
+            }
+           });
+
+           await prisma.book.update({
+            where: {
+                id: ad?.bookID
+            },
+            data: {
+                purchases: {
+                    increment: 1
+                }
+            }
+           });
+
            await prisma.touchType.updateMany({
                 where: {
                     advertisementId: touch?.advertisementId
@@ -321,4 +338,43 @@ export class AdvertisementResolver {
         });
     }
 
+    @Query(() => Boolean)
+    async verifyAdvertisement(@Arg("advertisementID") advertisementID: string ) : Promise<Boolean> {
+        await prisma.advertisementType.update({
+            where: {
+                id: advertisementID
+            },
+            data: {
+                verified: true
+            }
+        });
+
+        return true;
+    }
+
+    @Query(() => [AdvertisementType])
+    async getUnverifiedAdvertisements(): Promise<AdvertisementType[]> {
+        let ads =  await prisma.advertisementType.findMany({
+            where: {
+                verified: false
+            }
+        });
+
+        return ads;
+    }
+
+    @Query(() => Boolean)
+    async userBoughtAdvertisement(@Ctx() {req}: Context, @Arg("advertisement") advertisementID: string) : Promise<Boolean> {
+        let ad = await prisma.touchType.findFirst({
+            where: {
+                advertisementId: advertisementID,
+                isActive: false,
+                isFinal: true
+            }
+        });
+
+        if(ad?.buyerId == req.session.userId) return true;
+
+        return false;
+    }
 }
