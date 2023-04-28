@@ -48,6 +48,7 @@ export class UserResolver {
         {
             
             req.session.userId = user.id;
+            console.log(`Logged In ${req.session.id}`);
             return user;
         }
         
@@ -101,7 +102,19 @@ export class UserResolver {
 
     @Query(()=>UserType)
     async getCurrentUser(@Ctx() {req}:Context){
-        return await prisma.userType.findUniqueOrThrow({where:{id:req.session.userId}});
+        console.log(`Cookie: ${req.session.cookie.path}`);
+        console.log(`UserID: ${req.session.userId}`);
+        console.log(`Session: ${req.session.id}`);
+
+        let temp;
+        try {
+            temp = await prisma.userType.findUniqueOrThrow({where:{id:req.session.userId}});
+        }
+        catch(e)
+        {
+            console.error(e);
+        }
+        return temp;
     }
 
     @Query(() => [UserType])

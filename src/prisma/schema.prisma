@@ -24,6 +24,7 @@ model UserType {
     phoneNo String?
     ads AdvertisementType[]
     touches TouchType[]
+    ratings Rating[]
 }
 
 model Category {
@@ -44,6 +45,16 @@ model Book {
   category Category @relation(fields: [categoryID], references: [id])
   categoryID String @mongodb.ObjectId
   advertisements AdvertisementType[]
+  ratings Rating[]
+}
+
+model Rating {
+  id String @id @map("_id") @default(auto()) @mongodb.ObjectId
+  value Int
+  user UserType @relation(fields: [userID], references: [id])
+  userID String @mongodb.ObjectId
+  book Book @relation(fields: [bookID], references: [id])
+  bookID String @mongodb.ObjectId
 }
 
 model AdvertisementType {
@@ -52,6 +63,7 @@ model AdvertisementType {
     time String
     images String[] @default([])
     open Boolean @default(true)
+    verified Boolean @default(false)
     book Book @relation(fields: [bookID], references: [id])
     bookID String @mongodb.ObjectId
     seller UserType @relation(fields: [sellerID], references: [id])

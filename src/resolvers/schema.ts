@@ -6,6 +6,7 @@ import { AdvertisementResolver } from './advertisement.resolver';
 import { BookResolver } from './book.resolver';
 import { CategoryResolver } from './category.resolver';
 import { UserResolver } from './user.resolver';
+import { AnalyticsResolver } from './analytics.resolver';
 
 export function buildGQLSchema()
 {
@@ -14,7 +15,8 @@ export function buildGQLSchema()
         UserResolver,
         AdvertisementResolver,
         CategoryResolver,
-        BookResolver
+        BookResolver,
+        AnalyticsResolver,
     ] 
 
     return buildSchema({
